@@ -4,16 +4,11 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 import java.util.concurrent.TimeUnit;
-import java.util.Date;
-import java.io.File;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.interactions.Actions;
+
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.*;
-import static org.openqa.selenium.OutputType.*;
 
 public class ContactCreationTest {
     FirefoxDriver wd;
@@ -23,13 +18,13 @@ public class ContactCreationTest {
         wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/edit.php");
-        login();
+        login("admin", "secret");
     }
-    
+
     @Test
     public void ContactCreationTest() {
         getAddNewContact();
-        putNewContactInfo();
+        putNewContactInfo(new ContactData("ivan", "ivanov", "moscow", "84996523652", "79145632145"));
         returnHomePage();
     }
 
@@ -37,22 +32,22 @@ public class ContactCreationTest {
         wd.findElement(By.linkText("home page")).click();
     }
 
-    private void putNewContactInfo() {
+    private void putNewContactInfo(ContactData contactData) {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
-        wd.findElement(By.name("firstname")).sendKeys("котик");
+        wd.findElement(By.name("firstname")).sendKeys(contactData.getFname());
         wd.findElement(By.name("lastname")).click();
         wd.findElement(By.name("lastname")).clear();
-        wd.findElement(By.name("lastname")).sendKeys("котович");
+        wd.findElement(By.name("lastname")).sendKeys(contactData.getLname());
         wd.findElement(By.name("address")).click();
         wd.findElement(By.name("address")).clear();
-        wd.findElement(By.name("address")).sendKeys("кототаун");
+        wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
         wd.findElement(By.name("home")).click();
         wd.findElement(By.name("home")).clear();
-        wd.findElement(By.name("home")).sendKeys("72364562145");
+        wd.findElement(By.name("home")).sendKeys(contactData.getHnamber());
         wd.findElement(By.name("mobile")).click();
         wd.findElement(By.name("mobile")).clear();
-        wd.findElement(By.name("mobile")).sendKeys("71236547895");
+        wd.findElement(By.name("mobile")).sendKeys(contactData.getMobnamber());
         wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     }
 
@@ -60,13 +55,13 @@ public class ContactCreationTest {
         wd.findElement(By.linkText("add new")).click();
     }
 
-    private void login() {
+    private void login(String login, String password) {
         wd.findElement(By.name("user")).click();
         wd.findElement(By.name("user")).clear();
-        wd.findElement(By.name("user")).sendKeys("admin");
+        wd.findElement(By.name("user")).sendKeys(login);
         wd.findElement(By.name("pass")).click();
         wd.findElement(By.name("pass")).clear();
-        wd.findElement(By.name("pass")).sendKeys("secret");
+        wd.findElement(By.name("pass")).sendKeys(password);
         wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
     }
 
