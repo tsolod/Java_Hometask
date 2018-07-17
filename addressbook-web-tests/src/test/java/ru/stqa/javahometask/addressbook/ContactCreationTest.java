@@ -22,19 +22,22 @@ public class ContactCreationTest {
     public void setUp() throws Exception {
         wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        wd.get("http://localhost/addressbook/edit.php");
+        login();
     }
     
     @Test
     public void ContactCreationTest() {
-        wd.get("http://localhost/addressbook/edit.php");
-        wd.findElement(By.name("user")).click();
-        wd.findElement(By.name("user")).clear();
-        wd.findElement(By.name("user")).sendKeys("admin");
-        wd.findElement(By.name("pass")).click();
-        wd.findElement(By.name("pass")).clear();
-        wd.findElement(By.name("pass")).sendKeys("secret");
-        wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
-        wd.findElement(By.linkText("add new")).click();
+        getAddNewContact();
+        putNewContactInfo();
+        returnHomePage();
+    }
+
+    private void returnHomePage() {
+        wd.findElement(By.linkText("home page")).click();
+    }
+
+    private void putNewContactInfo() {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
         wd.findElement(By.name("firstname")).sendKeys("котик");
@@ -51,7 +54,20 @@ public class ContactCreationTest {
         wd.findElement(By.name("mobile")).clear();
         wd.findElement(By.name("mobile")).sendKeys("71236547895");
         wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
-        wd.findElement(By.linkText("home page")).click();
+    }
+
+    private void getAddNewContact() {
+        wd.findElement(By.linkText("add new")).click();
+    }
+
+    private void login() {
+        wd.findElement(By.name("user")).click();
+        wd.findElement(By.name("user")).clear();
+        wd.findElement(By.name("user")).sendKeys("admin");
+        wd.findElement(By.name("pass")).click();
+        wd.findElement(By.name("pass")).clear();
+        wd.findElement(By.name("pass")).sendKeys("secret");
+        wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
     }
 
     @AfterMethod
