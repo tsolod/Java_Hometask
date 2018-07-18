@@ -22,7 +22,7 @@ public class ContactCreationTest {
     }
 
     @Test
-    public void ContactCreationTest() {
+    public void testContactCreation() {
         getAddNewContact();
         putNewContactInfo(new ContactData("ivan", "ivanov", "moscow", "84996523652", "79145632145"));
         returnHomePage();
