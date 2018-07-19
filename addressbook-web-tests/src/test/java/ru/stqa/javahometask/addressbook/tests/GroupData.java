@@ -1,4 +1,4 @@
-package ru.stqa.javahometask.addressbook;
+package ru.stqa.javahometask.addressbook.tests;
 
 public class GroupData {
   private final String name;

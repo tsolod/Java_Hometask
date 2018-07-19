@@ -1,15 +1,15 @@
-package ru.stqa.javahometask.addressbook;
+package ru.stqa.javahometask.addressbook.apps;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import ru.stqa.javahometask.addressbook.tests.ContactData;
+import ru.stqa.javahometask.addressbook.tests.GroupData;
 
 import java.util.concurrent.TimeUnit;
 
-public class TestBase {
+public class ApplicationManager {
   FirefoxDriver wd;
 
   public static boolean isAlertPresent(FirefoxDriver wd) {
@@ -21,19 +21,18 @@ public class TestBase {
       }
   }
 
-  @BeforeMethod
-  public void setUp() throws Exception {
-      wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
-      wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-      wd.get("http://localhost/addressbook/group.php");
-      login("admin", "secret");
+  public void init() {
+    wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
+    wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    wd.get("http://localhost/addressbook/group.php");
+    login("admin", "secret");
   }
 
-  protected void returnHomePage() {
+  public void returnHomePage() {
       wd.findElement(By.linkText("home page")).click();
   }
 
-  protected void putNewContactInfo(ContactData contactData) {
+  public void putNewContactInfo(ContactData contactData) {
       wd.findElement(By.name("firstname")).click();
       wd.findElement(By.name("firstname")).clear();
       wd.findElement(By.name("firstname")).sendKeys(contactData.getFname());
@@ -52,7 +51,7 @@ public class TestBase {
       wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
   }
 
-  protected void getAddNewContact() {
+  public void getAddNewContact() {
       wd.findElement(By.linkText("add new")).click();
   }
 
@@ -67,15 +66,15 @@ public class TestBase {
 
   }
 
-  protected void returnToGroupsPage() {
+  public void returnToGroupsPage() {
       wd.findElement(By.linkText("group page")).click();
   }
 
-  protected void saveNewGrop() {
+  public void saveNewGrop() {
       wd.findElement(By.name("submit")).click();
   }
 
-  protected void putInfoGroup(GroupData groupData) {
+  public void putInfoGroup(GroupData groupData) {
       wd.findElement(By.name("group_name")).click();
       wd.findElement(By.name("group_name")).clear();
       wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
@@ -89,24 +88,23 @@ public class TestBase {
 
   }
 
-  protected void doNewGroup() {
+  public void doNewGroup() {
       wd.findElement(By.name("new")).click();
   }
 
-  protected void getGroupsPage() {
+  public void getGroupsPage() {
       wd.findElement(By.linkText("groups")).click();
   }
 
-  @AfterMethod
-  public void tearDown() {
-      wd.quit();
+  public void stop() {
+    wd.quit();
   }
 
-  protected void deleteGroup() {
+  public void deleteGroup() {
       wd.findElement(By.name("delete")).click();
   }
 
-  protected void selectGroup() {
+  public void selectGroup() {
       wd.findElement(By.name("selected[]")).click();
   }
 }

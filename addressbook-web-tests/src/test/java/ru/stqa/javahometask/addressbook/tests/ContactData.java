@@ -1,4 +1,4 @@
-package ru.stqa.javahometask.addressbook;
+package ru.stqa.javahometask.addressbook.tests;
 
 public class ContactData {
   private final String fname;
