@@ -16,4 +16,8 @@ public class NavigationHelper extends HelperBase{
   public void getAddNewContact() {
     click(By.linkText("add new"));
   }
+
+  public void getHome() {
+    click(By.linkText("home"));
+  }
 }
