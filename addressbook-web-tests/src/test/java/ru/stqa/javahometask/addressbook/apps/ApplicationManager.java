@@ -25,14 +25,12 @@ public class ApplicationManager {
 
   public void init() {
     if (browser.equals(BrowserType.FIREFOX)) {
-      wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
+      wd = new FirefoxDriver();
     } else if (browser.equals(BrowserType.CHROME)) {
       wd = new ChromeDriver();
     } else if (browser.equals(BrowserType.IEXPLORE)) {
       wd = new InternetExplorerDriver();
     }
-
-    wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
     contactHelper = new ContactHelper(wd);
