@@ -1,9 +1,13 @@
 package ru.stqa.javahometask.addressbook.apps;
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.javahometask.addressbook.tests.ContactData;
+
+
 
 public class ContactHelper extends HelperBase{
 
@@ -16,12 +20,17 @@ public class ContactHelper extends HelperBase{
       click(By.linkText("home page"));
   }
 
-  public void putNewContactInfo(ContactData contactData) {
-      type(By.name("firstname"),contactData.getFname());
-      type(By.name("lastname"),contactData.getLname());
-      type(By.name("address"),contactData.getAddress());
-      type(By.name("home"),contactData.getHnamber());
-      type(By.name("mobile"),contactData.getMobnamber());
+  public void putNewContactInfo(ContactData contactData, boolean creation) {
+    type(By.name("firstname"), contactData.getFname());
+    type(By.name("lastname"), contactData.getLname());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("home"), contactData.getHnamber());
+    type(By.name("mobile"), contactData.getMobnamber());
+    if (creation) {
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
   }
 
   public void doNewContact() {
