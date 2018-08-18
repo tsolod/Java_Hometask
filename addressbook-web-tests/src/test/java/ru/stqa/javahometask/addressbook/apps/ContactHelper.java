@@ -9,7 +9,7 @@ import ru.stqa.javahometask.addressbook.tests.ContactData;
 
 
 
-public class ContactHelper extends HelperBase{
+public class ContactHelper extends HelperBase {
 
 
   public ContactHelper(WebDriver wd) {
@@ -17,7 +17,7 @@ public class ContactHelper extends HelperBase{
   }
 
   public void returnHomePage() {
-      click(By.linkText("home page"));
+    click(By.linkText("home page"));
   }
 
   public void putNewContactInfo(ContactData contactData, boolean creation) {
@@ -51,5 +51,27 @@ public class ContactHelper extends HelperBase{
 
   public void deletContact() {
     click(By.xpath("//div[@id='content']/form[2]/input[2]"));
+  }
+
+  public void getAddNewContact() {
+    if ((isElementPresent(By.tagName("h1"))
+            && wd.findElement(By.tagName("h1")).getText().equals("Edit / add address book entry"))) {
+      return;
+    }
+    click(By.linkText("add new"));
+  }
+
+
+
+  public void createContact(ContactData contact, boolean creation) {
+    getAddNewContact();
+    putNewContactInfo(contact, creation);
+    doNewContact();
+    returnHomePage();
+  }
+
+
+  public boolean ThereAContact() {
+    return isElementPresent(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img"));
   }
 }
